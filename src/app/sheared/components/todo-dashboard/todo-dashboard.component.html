@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="card-body">
+    <form #todoForm="ngForm" (ngSubmit)="isInEditMode ? updateTodo() : addTodo()">
+
+      <div class="form-group mb-3">
+        <label>Todo Item</label>
+        <input
+        title="todoItem"
+          type="text"
+          class="form-control"
+          name="todoItem"
+          ngModel
+          required>
+      </div>
+
+      <button mat-stroked-button color="primary" type="submit">
+        {{ isInEditMode ? 'Update Todo' : 'Add Todo' }}
+      </button>
+
+    </form>
+  </div>
+</div>

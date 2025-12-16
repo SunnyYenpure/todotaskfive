@@ -1,0 +1,23 @@
+<div class="todo-box mt-5">
+  <form #todoForm="ngForm"
+        (ngSubmit)="isInEditMode ? updateTodo() : addTodo()">
+
+    <h5 class="mb-3 text-primary">
+      {{ isInEditMode ? 'Edit Todo' : 'Add Todo' }}
+    </h5>
+
+    <div class="mb-3">
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        name="todoItem"
+        ngModel
+        required
+        placeholder="Enter todo item">
+    </div>
+
+    <button mat-flat-button color="primary" type="submit">
+      {{ isInEditMode ? 'Update' : 'Add' }}
+    </button>
+  </form>
+</div>

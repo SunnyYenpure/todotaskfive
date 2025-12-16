@@ -1,0 +1,72 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Itodo } from '../../model/todo1';
+import { TodoserviceService } from '../../services/todoservice.service';
+import { NgForm } from '@angular/forms';
+import { UuidService } from '../../services/uuid.service';
+import { SnackbarService } from '../../services/snackbar.service';
+
+@Component({
+  selector: 'app-todo-dashboard',
+  templateUrl: './todo-dashboard.component.html',
+  styleUrls: ['./todo-dashboard.component.scss']
+})
+export class TodoDashboardComponent implements OnInit {
+ isInEditMode = false;
+  editedId = '';
+
+  @ViewChild('todoForm') todoForm!: NgForm;
+   constructor(
+    private _uuid: UuidService,
+    private _todoSer: TodoserviceService,
+    private _snackbar: SnackbarService
+  ) {}
+
+
+
+  ngOnInit(): void {
+    this._todoSer.editTodo$.subscribe((todo: Itodo) => {
+      this.isInEditMode = true;
+      this.editedId = todo.todoId;
+      this.todoForm?.form.patchValue(todo);
+    });
+  }
+
+  addTodo() {
+    if (!this.todoForm.valid) {
+      this._snackbar.openSnackbar('Please enter todo');
+      return;
+    }
+
+    const newTodo: Itodo = {
+      todoItem: this.todoForm.value.todoItem,
+      todoId: this._uuid.Uuid()
+    };
+
+    this._todoSer.addTodo(newTodo).subscribe({
+      next: res => {
+        this._snackbar.openSnackbar(res.message);
+        this.todoForm.reset();
+      },
+      error: err => this._snackbar.openSnackbar(err?.message || 'Add failed')
+    });
+  }
+
+  updateTodo() {
+    if (!this.todoForm.valid) return;
+
+    const updatedTodo: Itodo = {
+      todoItem: this.todoForm.value.todoItem,
+      todoId: this.editedId
+    };
+
+    this._todoSer.updateTodo(updatedTodo).subscribe({
+      next: res => {
+        this._snackbar.openSnackbar(res.message);
+        this.isInEditMode = false;
+        this._todoSer.disableFlag.next('');
+        this.todoForm.reset();
+      },
+      error: err => this._snackbar.openSnackbar(err?.message || 'Update failed')
+    });
+  }
+}
