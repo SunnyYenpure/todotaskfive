@@ -12,10 +12,10 @@ export class Todoservice1Service {
     disableFlag:Subject<string>=new Subject<string>()
       todosArray: Array<Itodo> = [
       {
-        todoItem: 'flex',
+        todoItem: 'JAVASCRIPT',
         todoId: '1'
       }, {
-        todoItem: 'Angular',
+        todoItem: 'ANGULAR',
         todoId: '2'
       }
     ]

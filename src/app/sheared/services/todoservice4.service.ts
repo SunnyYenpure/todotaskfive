@@ -11,12 +11,16 @@ editTodo$: Subject<Itodo> = new Subject<Itodo>()
      disableFlag:Subject<string>=new Subject<string>()
        todosArray: Array<Itodo> = [
        {
-         todoItem: 'Red',
+         todoItem: 'RXJS',
          todoId: '111'
        }, {
-         todoItem: 'Green',
+         todoItem: 'NGRX',
          todoId: '222'
-       }
+       },
+       {
+         todoItem: 'SERVICES',
+         todoId: '223'
+       },
      ]
    
      constructor() { }

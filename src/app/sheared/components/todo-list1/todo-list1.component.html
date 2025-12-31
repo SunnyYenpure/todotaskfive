@@ -20,7 +20,9 @@
     color="warn"
     (click)="removeTodo(todo.todoId)"
     [disabled]="todo.todoId === editedId">
-    <mat-icon class="me-1">delete</mat-icon>
+    <mat-icon class="me-1"><span class="material-symbols-outlined">
+auto_delete
+</span></mat-icon>
     
   </button>
 </div>
